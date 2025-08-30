@@ -1,0 +1,95 @@
+# Secret Sharing Polynomial Solver
+
+## 📌 Overview
+
+This project implements a solution for a secret-sharing problem where each share represents a point `(x, y)` on a polynomial. The hidden **secret** is the constant term `a0` of that polynomial. Given `n` shares, the program reconstructs the secret using a minimum of `k` shares, identifies invalid shares, and outputs results in a clear structured format.
+
+---
+
+## ⚙️ Input Format
+
+The input is provided in a JSON file:
+
+```json
+{
+    "keys": {
+        "n": 4,
+        "k": 3
+    },
+    "1": {
+        "base": "10",
+        "value": "4"
+    },
+    "2": {
+        "base": "2",
+        "value": "111"
+    },
+    "3": {
+        "base": "10",
+        "value": "12"
+    },
+    "6": {
+        "base": "4",
+        "value": "213"
+    }
+}
+```
+
+* **n** → total number of shares provided
+* **k** → minimum shares required to reconstruct the polynomial
+* Each share → key = x, value = y (with a given base)
+
+---
+
+## 🖥️ Output Format
+
+```
+recovered secret (a0): 3
+consensus found in 4 combinations out of 6.
+
+valid shares:
+key: 1   decimal: 4
+key: 2   decimal: 7
+key: 3   decimal: 12
+
+invalid shares:
+key: 6   decimal: 39
+```
+
+* Displays the reconstructed secret.
+* Shows how many combinations supported the consensus.
+* Separates **valid** and **invalid** shares.
+
+---
+
+## 🚀 How to Run
+
+1. Install Java (JDK 8 or above).
+2. Download `json-simple-1.1.1.jar` and place it in the same directory.
+3. Save the code as `secrete.java` and ensure `shares.json` is in the same folder.
+4. Compile:
+
+   ```sh
+   javac -cp .;json-simple-1.1.1.jar secrete.java
+   ```
+5. Run:
+
+   ```sh
+   java -cp .;json-simple-1.1.1.jar secrete
+   ```
+
+---
+
+## 💡 Key Learnings
+
+* Parsing JSON in Java using `json-simple`.
+* Handling large integers with `BigInteger`.
+* Using Vandermonde matrices with Gaussian elimination for polynomial solving.
+* Detecting invalid shares by consensus checking.
+* Structuring output to match assignment requirements.
+
+---
+
+## 📖 Feedback (100 words)
+
+When I first read the task, it was unclear, but I gradually understood that the shares represent points on a polynomial and the hidden secret is its constant term. I avoided Lagrange interpolation and instead used a Vandermonde matrix with Gaussian elimination to solve the system. I handled large numbers with BigInteger and parsed the JSON input using `json-simple`. The biggest challenges were setting up the classpath, managing file paths, and ensuring correct output formatting. Finally, my program not only reconstructs the secret but also clearly distinguishes valid and invalid shares, producing output in the required format.
